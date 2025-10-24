@@ -5,17 +5,40 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\LlistaCompra;
 
 class ProductController extends Controller
 {
-    // Mostra totes les categories i els seus productes
+    /**
+     * Muestra la página principal con las listas de compra
+     */
     public function index()
     {
-        $categories = Category::with('products')->get();
-        return view('products.index', compact('categories'));
+        // Obtener todas las listas de compra paginadas
+        $listas = LlistaCompra::with(['items.product'])
+            ->latest()
+            ->paginate(9);
+
+        // Calcular items completados y totales para cada lista
+        $listas->getCollection()->transform(function ($lista) {
+            $lista->items_totales = $lista->items->count();
+            $lista->items_completados = $lista->items->where('completado', true)->count();
+            return $lista;
+        });
+
+        // Estadísticas generales
+        $stats = [
+            'activas' => LlistaCompra::where('completada', false)->count(),
+            'productos' => Product::count(),
+            'categorias' => Category::count(),
+        ];
+
+        return view('index', compact('listas', 'stats'));
     }
 
-    // Desa un nou producte
+    /**
+     * Guarda un nuevo producto
+     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -23,7 +46,7 @@ class ProductController extends Controller
             'category_id' => 'nullable|exists:categories,id',
         ]);
 
-        // Classificació automàtica (extra)
+        // Clasificación automática (extra)
         $autoCategories = [
             'llet' => 'Làctics',
             'iogurt' => 'Làctics',
@@ -39,7 +62,7 @@ class ProductController extends Controller
             $validated['category_id'] = $category->id;
         }
 
-        // Si no s’ha assignat categoria, usa “Altres”
+        // Si no se ha asignado categoría, usa "Altres"
         if (empty($validated['category_id'])) {
             $category = Category::firstOrCreate(['name' => 'Altres']);
             $validated['category_id'] = $category->id;
@@ -47,10 +70,12 @@ class ProductController extends Controller
 
         Product::create($validated);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Producto creado correctamente');
     }
 
-    // Canvia l’estat de completat
+    /**
+     * Cambia el estado de completado
+     */
     public function toggleCompleted(Product $product)
     {
         $product->update(['completed' => !$product->completed]);
