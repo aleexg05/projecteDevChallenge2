@@ -2,47 +2,40 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    // Laravel ja assumeix 'users' i 'id', així que no cal especificar-ho
+    // Si vols mantenir-ho explícitament:
+    protected $table = 'users';
+    protected $primaryKey = 'id';
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
+    protected $fillable = [
+    'name',
+    'email',
+    'password',
+];
+
+
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Relació 1:N amb llistes creades
+    public function llistesCreades()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(LlistaCompra::class, 'user_id');
+    }
+
+    // Relació N:M amb llistes compartides
+    public function llistesCompartides()
+    {
+        return $this->belongsToMany(LlistaCompra::class, 'usuaris_llistes_compra', 'user_id', 'id_llista_compra');
     }
 }

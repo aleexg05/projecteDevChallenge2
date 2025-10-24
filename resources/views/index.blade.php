@@ -1,4 +1,4 @@
-@extends('layouts.app')
+<!-- @extends('layouts.app')
 
 @section('content')
 <div class="container py-4">
@@ -16,23 +16,23 @@
     @endif
 
     {{-- Llistat de categories --}}
-    @foreach ($categories as $category)
+    @foreach ($categories as $categoria)
         <div class="card mb-4 shadow-sm">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">{{ $category->name }}</h4>
+                <h4 class="mb-0">{{ $categoria->nom_categoria }}</h4>
             </div>
 
             <div class="card-body">
                 {{-- Productes de la categoria --}}
-                @if ($category->products->count() > 0)
+                @if ($categoria->productes->count() > 0)
                     <ul class="list-group mb-3">
-                        @foreach ($category->products as $product)
+                        @foreach ($categoria->productes as $producte)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
-                                    <form action="{{ route('products.toggle', $product) }}" method="POST" style="display:inline;">
+                                    <form action="{{ route('productes.toggle', $producte) }}" method="POST" style="display:inline;">
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-outline-success">
-                                            @if ($product->completed)
+                                            @if ($producte->comprat)
                                                 ✅
                                             @else
                                                 ☐
@@ -40,8 +40,8 @@
                                         </button>
                                     </form>
 
-                                    <span class="@if($product->completed) text-decoration-line-through text-muted @endif ms-2">
-                                        {{ $product->name }}
+                                    <span class="@if($producte->comprat) text-decoration-line-through text-muted @endif ms-2">
+                                        {{ $producte->nom_producte }}
                                     </span>
                                 </div>
                             </li>
@@ -52,14 +52,14 @@
                 @endif
 
                 {{-- Formulari per afegir productes --}}
-                <form action="{{ route('products.store') }}" method="POST" class="d-flex gap-2">
+                <form action="{{ route('productes.store') }}" method="POST" class="d-flex gap-2">
                     @csrf
-                    <input type="hidden" name="category_id" value="{{ $category->id }}">
-                    <input type="text" name="name" class="form-control" placeholder="Afegeix un nou producte..." required>
+                    <input type="hidden" name="id_categoria" value="{{ $categoria->id_categoria }}">
+                    <input type="text" name="nom_producte" class="form-control" placeholder="Afegeix un nou producte..." required>
                     <button type="submit" class="btn btn-primary">Afegir</button>
                 </form>
             </div>
         </div>
     @endforeach
 </div>
-@endsection
+@endsection -->
