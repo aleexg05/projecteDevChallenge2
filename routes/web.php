@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth; // importar Auth
+use App\Http\Controllers\CategoriaController;
 
 
 
@@ -14,9 +15,8 @@ use Illuminate\Support\Facades\Auth; // importar Auth
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/index', function () {
-    return view('index');
-});
+Route::get('/index', [CategoriaController::class, 'index'])->name('index');
+
 
 
 Route::get('/dashboard', function () {

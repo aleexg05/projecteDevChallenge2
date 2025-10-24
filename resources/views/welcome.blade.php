@@ -61,7 +61,7 @@
             <h1 class="display-4 mb-4">Gestiona la teva llista de la compra</h1>
             <p class="lead mb-5">Organitza els teus productes per categories i no et deixis res al supermercat</p>
             @if (Route::has('register'))
-                <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Comença ara</a>
+                <a href="{{ route('index') }}" class="btn btn-primary btn-lg">Comença ara</a>
             @endif
         </div>
     </section>
