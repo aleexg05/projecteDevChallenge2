@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,7 +24,7 @@ Route::get('/google-auth/redirect', function () {
 });
  
 Route::get('/google-auth/callback', function () {
-    $user_google = Socialite::driver('google')->stateless()->user();
+    $user_google = Socialite::driver('google')->user();
 
     $user = User::updateOrCreate([
         'email' => $user_google->email,
