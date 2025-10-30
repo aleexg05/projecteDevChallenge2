@@ -9,7 +9,7 @@
     @foreach($categories as $categoria)
         <div class="card shadow-sm mb-5 border-0">
             <div class="card-header bg-light d-flex justify-content-between align-items-center">
-                <h2 class="h5 mb-0 text-dark">{{ $categoria->nom }}</h2>
+                <h2 class="h5 mb-0 text-dark">{{ $categoria->nom_categoria }}</h2>
                 <span class="badge bg-secondary">{{ $categoria->productes->count() }} productes</span>
             </div>
             <div class="card-body bg-white">
@@ -19,7 +19,10 @@
                             <li class="list-group-item d-flex justify-content-between align-items-center">
                                 <div class="d-flex align-items-center gap-3">
                                     <i class="bi bi-box-seam text-primary fs-5"></i>
-                                    <span class="fw-semibold">{{ $producte->nom }}</span>
+                                    <span class="fw-semibold">{{ $producte->nom_producte }}</span>
+                                    @if($producte->comprat)
+                                        <span class="badge bg-info">Comprat</span>
+                                    @endif
                                 </div>
                                 <span class="badge bg-success fs-6">{{ number_format($producte->preu, 2) }} €</span>
                             </li>
