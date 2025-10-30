@@ -11,17 +11,22 @@ class Producte extends Model
 
     protected $table = 'productes';
 
-    protected $fillable = ['nom', 'preu', 'categoria_id'];
+    protected $fillable = [
+        'id_producte',
+        'nom_producte',
+        'preu',
+        'comprat',
+        'id_categoria',
+        'id_llista_compra'
+    ];
 
-  public function categoria()
-{
-    return $this->belongsTo(Categoria::class, 'id_categoria');
-}
-
-
-    public function llistes()
+    public function categoria()
     {
-        return $this->belongsToMany(LlistaCompra::class, 'productes_llistes_compra', 'producte_id', 'llista_compra_id')
-                    ->withPivot('quantitat');
+        return $this->belongsTo(Categoria::class, 'id_categoria', 'id_categoria');
+    }
+
+    public function llista()
+    {
+        return $this->belongsTo(LlistaCompra::class, 'id_llista_compra', 'id_llista_compra');
     }
 }
