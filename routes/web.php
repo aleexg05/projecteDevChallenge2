@@ -31,7 +31,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
- 
+
 Route::get('/google-auth/callback', function () {
     /** @var \Laravel\Socialite\Two\GoogleProvider $driver */
     $driver = Socialite::driver('google');
@@ -48,4 +48,4 @@ Route::get('/google-auth/callback', function () {
 
     return redirect('/dashboard');
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
