@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name', 50); // Nom d’usuari
             $table->string('email', 50)->unique(); // Correu electrònic
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

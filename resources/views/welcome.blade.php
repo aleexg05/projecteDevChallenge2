@@ -60,8 +60,8 @@
         <div class="container">
             <h1 class="display-4 mb-4">Gestiona la teva llista de la compra</h1>
             <p class="lead mb-5">Organitza els teus productes per categories i no et deixis res al supermercat</p>
-            @if (Route::has('register'))
-                <a href="{{ route('index') }}" class="btn btn-primary btn-lg">Comença ara</a>
+            @if (Route::has('login'))
+                <a href="{{ route('login') }}" class="btn btn-primary btn-lg">Inicia Sessió</a>
             @endif
         </div>
     </section>
