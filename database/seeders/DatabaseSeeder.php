@@ -1,7 +1,6 @@
 <?php
 
 namespace Database\Seeders;
-
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
@@ -19,8 +18,9 @@ class DatabaseSeeder extends Seeder
   public function run(): void
 {
     $this->call([
-        // CategoriesSeeder::class,
-        // LlistesCompraSeeder::class,
+       UserSeeder::class,           
+        CategoriesSeeder::class,      
+        LlistesCompraSeeder::class,   
         ProducteSeeder::class,
     ]);
 }

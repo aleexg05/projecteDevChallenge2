@@ -8,19 +8,18 @@ return new class extends Migration {
     public function up(): void
 {
     Schema::create('llistes_compra', function (Blueprint $table) {
-        $table->unsignedBigInteger('id_llista_compra');
-        $table->primary('id_llista_compra');
+    $table->unsignedBigInteger('id_llista_compra');
+    $table->primary('id_llista_compra');
 
-        $table->unsignedBigInteger('id_usuari');
-        $table->unsignedBigInteger('id_producte');
-        $table->unsignedBigInteger('id_categoria');
+    $table->unsignedBigInteger('id_usuari');
+    $table->timestamps();
 
-        $table->timestamps();
+    $table->foreign('id_usuari')
+          ->references('id_usuari')
+          ->on('users')
+          ->onDelete('cascade');
+});
 
-        $table->foreign('id_usuari')->references('id_usuari')->on('users')->onDelete('cascade');
-        $table->foreign('id_producte')->references('id_producte')->on('productes')->onDelete('cascade');
-        $table->foreign('id_categoria')->references('id_categoria')->on('categories')->onDelete('cascade');
-    });
 }
 
 

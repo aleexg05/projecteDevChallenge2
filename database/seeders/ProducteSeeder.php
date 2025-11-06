@@ -17,25 +17,15 @@ class ProducteSeeder extends Seeder
     {
      DB::table('productes')->insert([
             [
-                'id_producte' => 1002,
-                'nom_producte' => 'Plàtan',
-                'preu' => 0.95,
+                'id_producte' => 1,
+                'nom_producte' => 'Plàtan', 
                 'comprat' => true,
                 'id_categoria' => 1,
-                'id_llista_compra' => 10,
+                'id_llista_compra' => 1,
+                'etiqueta_producte' => 'Bonpreu',
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
-            ],
-            [
-                'id_producte' => 1003,
-                'nom_producte' => 'Aigua',
-                'preu' => 0.60,
-                'comprat' => false,
-                'id_categoria' => 2,
-                'id_llista_compra' => 10,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
+            ]
         ]);
     }
 }
