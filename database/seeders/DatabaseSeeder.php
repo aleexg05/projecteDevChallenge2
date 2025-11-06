@@ -18,12 +18,14 @@ class DatabaseSeeder extends Seeder
   public function run(): void
 {
     $this->call([
-       UserSeeder::class,           
-        CategoriesSeeder::class,      
-        LlistesCompraSeeder::class,   
-        ProducteSeeder::class,
+        UserSeeder::class,             // Primer: crea els usuaris
+        CategoriesSeeder::class,       // Segon: crea les categories
+        LlistesCompraSeeder::class,    // Tercer: crea les llistes de compra
+        ProducteSeeder::class,         // Quart: crea els productes
+        SessionSeeder::class,          // Últim: crea la sessió per l'usuari
     ]);
 }
+
 
 }
 
