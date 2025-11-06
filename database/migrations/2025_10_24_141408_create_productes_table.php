@@ -10,9 +10,7 @@ return new class extends Migration {
         Schema::create('productes', function (Blueprint $table) {
             $table->unsignedBigInteger('id_producte');
             $table->primary('id_producte');
-
             $table->string('nom_producte', 20);
-            $table->decimal('preu', 5, 2);
             $table->boolean('comprat')->default(false);
             $table->unsignedBigInteger('id_categoria');
             $table->unsignedBigInteger('id_llista_compra');
@@ -21,12 +19,12 @@ return new class extends Migration {
             $table->foreign('id_categoria')
                   ->references('id_categoria')
                   ->on('categories')
-                  ->onDelete('cascade');
+                  ->onDelete('restrict');
 
             $table->foreign('id_llista_compra')
                   ->references('id_llista_compra')
                   ->on('llistes_compra')
-                  ->onDelete('cascade');
+                  ->onDelete('restrict');
         });
     }
 
