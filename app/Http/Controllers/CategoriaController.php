@@ -10,4 +10,9 @@ class CategoriaController extends Controller
         $categories = Categoria::with('productes')->get();
         return view('index', compact('categories'));
     }
+    public function create()
+{
+    return view('llista_compra.create');
+}
+
 }
