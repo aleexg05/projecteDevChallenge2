@@ -12,20 +12,23 @@
     <div class="card shadow-sm mb-5 border border-success-subtle">
         <div class="card-header bg-success-subtle d-flex justify-content-between align-items-center px-4 py-3">
             <h2 class="h5 mb-0 text-dark">📋 Les meves llistes de compra</h2>
-            <a href="{{ route('llista_compra.create') }}" class="btn btn-success btn-sm">
+            <a href="{{ route('categoria.create') }}" class="btn btn-success btn-sm">
                 <i class="bi bi-plus-circle"></i> Nova llista
             </a>
         </div>
         <div class="card-body bg-white px-4 py-3">
             <div class="row g-3">
                 <div class="col-md-6">
-                    <a href="{{ route('llistes.index') }}" class="btn btn-outline-primary w-100 py-3">
+                 
                         <i class="bi bi-list-check fs-4"></i>
                         <div class="mt-2">Les meves llistes</div>
                     </a>
                 </div>
+                <a href="{{ route('categoria.eliminar') }}" class="btn btn-danger">
+    Eliminar
+</a>
+
                 <div class="col-md-6">
-                    <a href="{{ route('llistes.shared') }}" class="btn btn-outline-info w-100 py-3">
                         <i class="bi bi-share fs-4"></i>
                         <div class="mt-2">Llistes compartides</div>
                     </a>

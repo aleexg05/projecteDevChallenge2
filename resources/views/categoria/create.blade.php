@@ -1,23 +1,20 @@
-@extends('layouts.app') {{-- Si tens una plantilla base --}}
+@extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <h2>Crear nova llista de compra</h2>
+    <h2>Crear nova categoria</h2>
 
-    <form action="{{ route('llista_compra.store') }}" method="POST">
+    <form action="{{ route('categoria.store') }}" method="POST">
         @csrf
 
         <div class="mb-3">
-            <label for="nom_llista" class="form-label">Nom de la llista</label>
-            <input type="text" name="nom_llista" id="nom_llista" class="form-control" required>
+            <label for="nom_categoria" class="form-label">Nom de la categoria</label>
+            <input type="text" name="nom_categoria" id="nom_categoria" class="form-control" required>
         </div>
 
-        <div class="mb-3">
-            <label for="descripcio" class="form-label">Descripció</label>
-            <textarea name="descripcio" id="descripcio" class="form-control" rows="3"></textarea>
-        </div>
+       
 
-        <button type="submit" class="btn btn-primary">Guardar</button>
+        <button type="submit" class="btn btn-primary">Guardar categoria</button>
     </form>
 </div>
 @endsection

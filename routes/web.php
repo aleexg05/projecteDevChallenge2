@@ -11,8 +11,12 @@ Route::get('/', function () {
 });
 
 Route::get('/index', [CategoriaController::class, 'index'])->name('index');
-Route::get('/llista_compra/create', [CategoriaController::class, 'create'])->name('llista_compra.create');
-Route::post('/llista_compra', [CategoriaController::class, 'store'])->name('llista_compra.store');
+Route::get('/categoria/create', [CategoriaController::class, 'create'])->name('categoria.create');
+Route::post('/categoria', [CategoriaController::class, 'store'])->name('categoria.store');
+Route::get('/categoria', [CategoriaController::class, 'index'])->name('categoria.index');
+Route::get('/categoria/eliminar', [CategoriaController::class, 'eliminar'])->name('categoria.eliminar');
+Route::delete('/categoria/{id_categoria}', [CategoriaController::class, 'eliminar'])->name('categoria.eliminar');
+
 
 
 
