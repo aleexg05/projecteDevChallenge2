@@ -11,10 +11,10 @@ class Categoria extends Model
 
     protected $table = 'categories';
 
-    protected $fillable = ['nom'];
+    protected $fillable = ['nom_categoria'];
 
     public function productes()
     {
-        return $this->hasMany(Producte::class, 'id_categoria');
+        return $this->hasMany(Producte::class, 'id_categoria', 'id_categoria');
     }
 }

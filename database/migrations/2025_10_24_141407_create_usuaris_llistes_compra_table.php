@@ -11,13 +11,12 @@ return new class extends Migration {
         $table->unsignedBigInteger('user_id');
         $table->unsignedBigInteger('id_llista_compra');
 
-        $table->primary(['user_id', 'id_llista_compra']);
+            $table->primary(['user_id', 'id_llista_compra']);
 
-        $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
-        $table->foreign('id_llista_compra')->references('id_llista_compra')->on('llistes_compra')->onDelete('cascade');
-    });
-}
-
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('id_llista_compra')->references('id_llista_compra')->on('llistes_compra')->onDelete('cascade');
+        });
+    }
 
     public function down(): void
     {

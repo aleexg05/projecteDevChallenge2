@@ -15,13 +15,6 @@ class CategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('categories')->insert([
-        [
-            // Elimina 'id_categoria' => 1,
-            'nom_categoria' => 'Begudes',
-            'created_at' => now(),
-            'updated_at' => now(),
-        ],
-        ]);
+        //
     }
 }

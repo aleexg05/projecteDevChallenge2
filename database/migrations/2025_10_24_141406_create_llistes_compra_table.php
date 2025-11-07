@@ -11,7 +11,7 @@ return new class extends Migration {
     $table->unsignedBigInteger('id_llista_compra');
     $table->primary('id_llista_compra');
 
-    $table->unsignedBigInteger('user_id');
+    $table->unsignedBigInteger('id_usuari');
     $table->timestamps();
 
     $table->foreign('user_id')

@@ -9,6 +9,7 @@ class CategoriaController extends Controller
     {
         $categories = Categoria::with('productes')->get();
         return view('index', compact('categories'));
+
     }
     public function create()
 {
