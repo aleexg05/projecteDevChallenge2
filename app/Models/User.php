@@ -28,10 +28,11 @@ class User extends Authenticatable
     ];
 
     // Relació 1:N amb llistes creades
-    public function llistesCreades()
-    {
-        return $this->hasMany(LlistaCompra::class, 'user_id');
-    }
+   public function llistesCreades()
+{
+    return $this->hasMany(LlistaCompra::class, 'user_id');
+}
+
 
     // Relació N:M amb llistes compartides
     public function llistesCompartides()
