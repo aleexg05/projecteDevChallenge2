@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
 use App\Models\User;
 use App\Http\Controllers\CategoriaController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
     return view('welcome');
@@ -25,18 +26,18 @@ Route::get('/google-auth/redirect', function () {
 });
  
 Route::get('/google-auth/callback', function () {
-    $user_google = Socialite::driver('google')->stateless()->user();
+    $user_google = Socialite::driver('google')->user();
 
     $user = User::updateOrCreate([
-        'email' => $user_google->email,
+        'email' => $user_google->getEmail(),
     ], [
-        'name' => $user_google->name,
-        'email' => $user_google->email,
+        'name' => $user_google->getName(),
+        'email' => $user_google->getEmail(),
     ]);
 
     Auth::login($user, true);
 
-    return redirect('/dashboard');
+    return redirect('/index');
 });
 
 Route::get('/dashboard', function () {
