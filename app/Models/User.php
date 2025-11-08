@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -16,11 +18,10 @@ class User extends Authenticatable
     protected $primaryKey = 'id';
 
     protected $fillable = [
-    'name',
-    'email',
-    'password',
-];
-
+        'name',
+        'email',
+        'password',
+    ];
 
     protected $hidden = [
         'password',
@@ -28,15 +29,31 @@ class User extends Authenticatable
     ];
 
     // Relació 1:N amb llistes creades
-   public function llistesCreades()
-{
-    return $this->hasMany(LlistaCompra::class, 'user_id');
-}
-
+    /**
+     * Relació 1:N amb les llistes de compra creades per l'usuari.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function llistesCreades(): HasMany
+    {
+        return $this->hasMany(LlistaCompra::class, 'user_id');
+    }
 
     // Relació N:M amb llistes compartides
-    public function llistesCompartides()
+    /**
+     * Relació N:M amb les llistes de compra compartides amb l'usuari.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function llistesCompartides(): BelongsToMany
     {
-        return $this->belongsToMany(LlistaCompra::class, 'usuaris_llistes_compra', 'user_id', 'id_llista_compra');
+        return $this->belongsToMany(
+            LlistaCompra::class,
+            'usuaris_llistes_compra',
+            'user_id',
+            'id_llista_compra',
+            'id',
+            'id_llista_compra'
+        );
     }
 }

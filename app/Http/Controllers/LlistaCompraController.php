@@ -12,52 +12,54 @@ use Illuminate\Support\Facades\Auth;
 class LlistaCompraController extends Controller
 {
     public function index()
-{
-    $usuari = Auth::user();
-    $llistes = $usuari->llistesCreades()->get();
+    {
+        /** @var \App\Models\User $usuari */
+        $usuari = Auth::user();
+        $llistes = $usuari->llistesCreades()->get();
 
-    return view('llistes.index', compact('llistes'));
-}
+        return view('llistes.index', compact('llistes'));
+    }
 
-public function create()
-{
-    return view('llistes.create');
-}
+    public function create()
+    {
+        return view('llistes.create');
+    }
 
-public function store(Request $request)
-{
-    $request->validate(['nom' => 'required|string|max:50']);
+    public function store(Request $request)
+    {
+        $request->validate(['nom' => 'required|string|max:50']);
 
-    LlistaCompra::create([
-        'id_llista_compra' => now()->timestamp, // o UUID si prefereixes
-        'nom' => $request->nom,
-        'user_id' => Auth::id(),
-    ]);
+        LlistaCompra::create([
+            'id_llista_compra' => now()->timestamp, // o UUID si prefereixes
+            'nom' => $request->nom,
+            'user_id' => Auth::id(),
+        ]);
 
-    return redirect()->route('llistes.index')->with('success', 'Llista creada correctament.');
-}
+        return redirect()->route('llistes.index')->with('success', 'Llista creada correctament.');
+    }
 
-public function editar($id)
-{
-    $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
-    return view('llistes.editar', compact('llista'));
-}
+    public function editar($id)
+    {
+        $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
+        return view('llistes.editar', compact('llista'));
+    }
 
-public function actualitzar(Request $request, $id)
-{
-    $request->validate(['nom' => 'required|string|max:50']);
+    public function actualitzar(Request $request, $id)
+    {
+        $request->validate(['nom' => 'required|string|max:50']);
 
-    $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
-    $llista->update(['nom' => $request->nom]);
+        $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
+        $llista->update(['nom' => $request->nom]);
 
-    return redirect()->route('llistes.index')->with('success', 'Llista actualitzada.');
-}
+        return redirect()->route('llistes.index')->with('success', 'Llista actualitzada.');
+    }
 
-public function eliminar($id){
-    return redirect()->route('llistes.index')->with('success', 'Llista eliminada.');
+    public function eliminar($id)
+    {
+        $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
+        $llista->delete();
+
+        return redirect()->route('llistes.index')->with('success', 'Llista eliminada.');
     }
 }
-    $llista->delete();
-
-    return redirect()->route('llistes.index')->with('success', 'Llista eliminada.');
 
