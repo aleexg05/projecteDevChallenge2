@@ -18,7 +18,6 @@
                 <tr>
                     <th>ID</th>
                     <th>Nom</th>
-                    <th>Preu</th>
                     <th>Accions</th>
                 </tr>
             </thead>

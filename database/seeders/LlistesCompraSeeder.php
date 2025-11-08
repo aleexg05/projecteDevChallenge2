@@ -16,6 +16,7 @@ class LlistesCompraSeeder extends Seeder
     {
          DB::table('llistes_compra')->insert([
             'id_llista_compra' => 1,
+            'nom'=> 'Llista setmanal',
             'user_id' => 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

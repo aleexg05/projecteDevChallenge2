@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         CategoriesSeeder::class,
         LlistesCompraSeeder::class,
         ProducteSeeder::class,
+        SessionSeeder::class
         
     ]);
 }

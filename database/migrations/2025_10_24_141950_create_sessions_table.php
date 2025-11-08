@@ -8,17 +8,18 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
-            $table->string('id'); // UUID como clave primaria
+            $table->string('id'); // UUID com a clau primària
             $table->primary('id');
 
-            $table->unsignedBigInteger('id_usuari')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->string('ip_address', 45)->nullable();
             $table->text('user_agent')->nullable();
             $table->text('payload');
             $table->integer('last_activity');
 
-            $table->foreign('id_usuari')
-                  ->references('id_usuari')
+            // ✅ Clau forana corregida
+            $table->foreign('user_id')
+                  ->references('id') // abans deies 'user_id', però la taula 'users' té 'id'
                   ->on('users')
                   ->onDelete('cascade');
         });
