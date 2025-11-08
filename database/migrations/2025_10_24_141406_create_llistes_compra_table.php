@@ -11,11 +11,11 @@ return new class extends Migration {
     $table->unsignedBigInteger('id_llista_compra');
     $table->primary('id_llista_compra');
 
-    $table->unsignedBigInteger('id_usuari');
+    $table->unsignedBigInteger('user_id');
     $table->timestamps();
 
     $table->foreign('user_id')
-          ->references('id') // ← aquí está el cambio
+          ->references('id') 
           ->on('users')
           ->onDelete('cascade');
 });
