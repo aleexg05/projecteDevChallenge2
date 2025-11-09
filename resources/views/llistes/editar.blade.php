@@ -25,9 +25,8 @@
         <a href="{{ route('productes.create', $llista->id_llista_compra) }}" class="btn btn-success">
             ➕ Afegir producte
         </a>
-        <a href="{{ route('categories.create') }}" class="btn btn-secondary">
-            ➕ Nova categoria
-        </a>
+        <a href="{{ route('categories.create', $llista->id_llista_compra) }}" class="btn btn-secondary">➕ Nova categoria</a>
+
     </div>
 
     <!-- Productes actuals -->

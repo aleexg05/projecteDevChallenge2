@@ -45,6 +45,18 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/llistes/{id}/editar', [LlistaCompraController::class, 'editar'])->name('llistes.editar');
     Route::put('/llistes/{id}', [LlistaCompraController::class, 'actualitzar'])->name('llistes.actualitzar');
     Route::delete('/llistes/{id}', [LlistaCompraController::class, 'eliminar'])->name('llistes.eliminar');
+    Route::get('/llistes/{id}/categories/create', [CategoriaController::class, 'create'])->name('categories.create');
+Route::post('/llistes/{id}/categories', [CategoriaController::class, 'store'])->name('categories.store');
+
+    Route::post('/categories', [CategoriaController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{id}/editar', [CategoriaController::class, 'editar'])->name('categories.editar');
+    Route::put('/categories/{id}', [CategoriaController::class, 'actualitzar'])->name('categories.actualitzar');
+    Route::delete('/categories/{id}', [CategoriaController::class, 'eliminar'])->name('categories.eliminar');
+    Route::get('/llistes/{id}/productes/create', [ProducteController::class, 'create'])->name('productes.create');
+    Route::post('/llistes/{id}/productes', [ProducteController::class, 'store'])->name('productes.store');
+    Route::get('/productes/{id}/editar', [ProducteController::class, 'editar'])->name('productes.editar');
+    Route::put('/productes/{id}', [ProducteController::class, 'actualitzar'])->name('productes.actualitzar');
+    Route::delete('/productes/{id}', [ProducteController::class, 'eliminar'])->name('productes.eliminar');
 });
 
 
@@ -54,7 +66,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
 });
- 
+
 Route::get('/google-auth/callback', function () {
     $user_google = Socialite::driver('google')->user();
 
@@ -80,4 +92,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

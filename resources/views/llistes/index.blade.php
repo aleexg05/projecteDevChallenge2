@@ -42,7 +42,7 @@
         </ul>
     @else
         <div class="alert alert-info text-center">
-            No tens cap llista creada. <a href="{{ route('llistes.create') }}">Crea una nova llista</a>.
+            No tens cap llista creada. <a href="{{ route('llistes.productes.create') }}">Crea una nova llista</a>.
         </div>
     @endif
 </div>

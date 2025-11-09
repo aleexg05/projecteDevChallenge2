@@ -6,7 +6,7 @@
 <div class="container py-4">
     <h1 class="mb-4 text-center text-success">➕ Crear producte</h1>
 
-    <form action="{{ route('producte.store') }}" method="POST">
+<form action="{{ route('productes.store', $llista->id_llista_compra) }}" method="POST">
         @csrf
 
         <!-- Nom del producte -->
@@ -32,14 +32,9 @@
         </div>
 
         <!-- Llista de compra -->
-        <div class="mb-3">
-            <label for="id_llista_compra" class="form-label">Llista de compra</label>
-            <select name="id_llista_compra" id="id_llista_compra" class="form-select" required>
-                @foreach($llistes as $llista)
-                    <option value="{{ $llista->id_llista_compra }}">{{ $llista->nom_llista }}</option>
-                @endforeach
-            </select>
-        </div>
+       <input type="hidden" name="id_llista_compra" value="{{ $llista->id_llista_compra }}">
+<p class="form-text">Afegint producte a la llista: <strong>{{ $llista->nom }}</strong></p>
+
 
         <!-- Etiqueta -->
         <div class="mb-3">

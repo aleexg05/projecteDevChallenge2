@@ -12,12 +12,16 @@ class Producte extends Model
     protected $table = 'productes';
 
     protected $fillable = [
-        'id_producte',
         'nom_producte',
         'preu',
         'comprat',
         'id_categoria',
-        'id_llista_compra'
+        'id_llista_compra',
+        'etiqueta_producte'
+    ];
+
+    protected $casts = [
+        'comprat' => 'boolean',
     ];
 
     public function categoria()
