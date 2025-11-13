@@ -27,7 +27,7 @@ Route::put('/categoria/{id_categoria}', [CategoriaController::class, 'actualitza
 
 
 Route::get('/producte/create', [ProducteController::class, 'create'])->name('producte.create');
-Route::post('/producte', [ProducteController::class, 'store'])->name('producte.store');
+Route::post('/producte/{id_llista_compra}', [ProducteController::class, 'store'])->name('producte.store');
 
 
 Route::get('/producte/{id}/editar', [ProducteController::class, 'editar'])->name('producte.editar');
@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/llistes/create', [LlistaCompraController::class, 'create'])->name('llistes.create');
     Route::post('/llistes', [LlistaCompraController::class, 'store'])->name('llistes.store');
     Route::get('/llistes/{id}/editar', [LlistaCompraController::class, 'editar'])->name('llistes.editar');
-    Route::put('/llistes/{id}', [LlistaCompraController::class, 'actualitzar'])->name('llistes.actualitzar');
+Route::put('/llistes/{id}', [LlistaCompraController::class, 'actualitzar'])->name('llistes.actualitzar');
     Route::delete('/llistes/{id}', [LlistaCompraController::class, 'eliminar'])->name('llistes.eliminar');
     Route::get('/llistes/{id}/categories/create', [CategoriaController::class, 'create'])->name('categories.create');
 Route::post('/llistes/{id}/categories', [CategoriaController::class, 'store'])->name('categories.store');
@@ -55,8 +55,11 @@ Route::post('/llistes/{id}/categories', [CategoriaController::class, 'store'])->
     Route::get('/llistes/{id}/productes/create', [ProducteController::class, 'create'])->name('productes.create');
     Route::post('/llistes/{id}/productes', [ProducteController::class, 'store'])->name('productes.store');
     Route::get('/productes/{id}/editar', [ProducteController::class, 'editar'])->name('productes.editar');
-    Route::put('/productes/{id}', [ProducteController::class, 'actualitzar'])->name('productes.actualitzar');
+Route::put('/productes/{id}', [ProducteController::class, 'actualitzar'])->name('productes.actualitzar');
+
     Route::delete('/productes/{id}', [ProducteController::class, 'eliminar'])->name('productes.eliminar');
+    Route::put('/productes/{id}/categoria', [ProducteController::class, 'actualitzarCategoria'])
+     ->name('productes.actualitzarCategoria');
 });
 
 

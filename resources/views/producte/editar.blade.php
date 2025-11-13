@@ -6,7 +6,7 @@
 <div class="container py-4">
     <h1 class="mb-4 text-center text-warning">✏️ Editar producte</h1>
 
-    <form action="{{ route('producte.actualitzar', $producte->id_producte) }}" method="POST">
+<form action="{{ route('productes.actualitzar', $producte->id_producte) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -15,10 +15,7 @@
             <input type="text" name="nom_producte" id="nom_producte" class="form-control" value="{{ old('nom_producte', $producte->nom_producte) }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="preu" class="form-label">Preu (€)</label>
-            <input type="number" step="0.01" name="preu" id="preu" class="form-control" value="{{ old('preu', $producte->preu) }}" required>
-        </div>
+      
 
         <div class="mb-3">
             <label for="id_categoria" class="form-label">Categoria</label>

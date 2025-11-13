@@ -11,7 +11,11 @@ class LlistaCompra extends Model
 
     protected $table = 'llistes_compra';
 
+    protected $primaryKey = 'id_llista_compra'; // 👉 afegeix això
+
     protected $fillable = ['nom', 'user_id'];
+
+    public $timestamps = true;
 
     public function creador()
     {
@@ -20,8 +24,7 @@ class LlistaCompra extends Model
 
     public function productes()
     {
-        return $this->belongsToMany(Producte::class, 'productes_llistes_compra', 'llista_compra_id', 'producte_id')
-                    ->withPivot('quantitat');
+        return $this->hasMany(Producte::class, 'id_llista_compra', 'id_llista_compra');
     }
 
     public function usuarisCompartits()

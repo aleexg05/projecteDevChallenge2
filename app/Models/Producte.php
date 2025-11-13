@@ -11,13 +11,14 @@ class Producte extends Model
 
     protected $table = 'productes';
 
+    protected $primaryKey = 'id_producte'; // 👉 añade esto
+
     protected $fillable = [
         'nom_producte',
-        'preu',
         'comprat',
         'id_categoria',
         'id_llista_compra',
-        'etiqueta_producte'
+        'etiqueta_producte',
     ];
 
     protected $casts = [

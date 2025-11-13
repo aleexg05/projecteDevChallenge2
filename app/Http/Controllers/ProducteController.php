@@ -27,9 +27,8 @@ class ProducteController extends Controller
     {
         $request->validate([
             'nom_producte' => 'required|string|max:255',
-            'preu' => 'required|numeric|min:0',
             'id_categoria' => 'required|exists:categories,id_categoria',
-            'etiqueta_producte' => 'nullable|string|max:50',
+            'etiqueta_producte' => 'required|string|max:50',
         ]);
 
         $llista = LlistaCompra::where('id_llista_compra', $id_llista)
@@ -38,11 +37,9 @@ class ProducteController extends Controller
 
         Producte::create([
             'nom_producte' => $request->nom_producte,
-            'preu' => $request->preu,
             'id_categoria' => $request->id_categoria,
-            'etiqueta_producte' => $request->etiqueta_producte,
             'id_llista_compra' => $llista->id_llista_compra,
-            'comprat' => false,
+            'etiqueta_producte' => $request->etiqueta_producte,
         ]);
 
         return redirect()->route('llistes.editar', $llista->id_llista_compra)
@@ -68,36 +65,17 @@ class ProducteController extends Controller
     {
         $request->validate([
             'nom_producte' => 'required|string|max:255',
-            'preu' => 'required|numeric|min:0',
             'id_categoria' => 'required|exists:categories,id_categoria',
-            'etiqueta_producte' => 'nullable|string|max:50',
-            'comprat' => 'boolean',
         ]);
 
-        $producte = Producte::with('llista')->findOrFail($id);
+        $producte = Producte::with('llista')
+            ->where('id_producte', $id)
+            ->whereHas('llista', fn($q) => $q->where('user_id', Auth::id()))
+            ->firstOrFail();
 
-        if ($producte->llista->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        $producte->update($request->only('nom_producte', 'preu', 'id_categoria', 'etiqueta_producte', 'comprat'));
+        $producte->update($request->only(['nom_producte', 'id_categoria']));
 
         return redirect()->route('llistes.editar', $producte->id_llista_compra)
                          ->with('success', 'Producte actualitzat correctament.');
-    }
-
-    // Elimina el producte
-    public function eliminar($id)
-    {
-        $producte = Producte::with('llista')->findOrFail($id);
-
-        if ($producte->llista->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        $producte->delete();
-
-        return redirect()->route('llistes.editar', $producte->id_llista_compra)
-                         ->with('success', 'Producte eliminat correctament.');
     }
 }

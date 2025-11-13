@@ -39,20 +39,37 @@ class LlistaCompraController extends Controller
     }
 
     public function editar($id)
-    {
-        $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
-        return view('llistes.editar', compact('llista'));
-    }
+{
+    $llista = LlistaCompra::with('productes.categoria') // carrega productes i la seva categoria
+                ->where('id_llista_compra', $id)
+                ->where('user_id', Auth::id())
+                ->firstOrFail();
 
-    public function actualitzar(Request $request, $id)
-    {
-        $request->validate(['nom' => 'required|string|max:50']);
+    return view('llistes.editar', compact('llista'));
+}
 
-        $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
-        $llista->update(['nom' => $request->nom]);
 
+  public function actualitzar(Request $request, $id)
+{
+        
+    $request->validate(['nom' => 'required|string|max:50']);
+
+    $llista = LlistaCompra::where('id_llista_compra', $id)
+                          ->where('user_id', Auth::id())
+                          ->firstOrFail();
+$llista->nom = $request->nom;
+$llista->save();
+
+
+    if ($llista->nom !== $request->nom) {
+        $llista->nom = $request->nom;
+        $llista->save();
         return redirect()->route('llistes.index')->with('success', 'Llista actualitzada.');
     }
+
+    return redirect()->route('llistes.index')->with('info', 'No s\'han fet canvis.');
+}
+
 
     public function eliminar($id)
     {

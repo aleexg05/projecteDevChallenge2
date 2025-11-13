@@ -11,7 +11,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_producte');
             $table->primary('id_producte');
             $table->string('nom_producte', 20);
-            $table->boolean('comprat')->default(false);
             $table->unsignedBigInteger('id_categoria');
             $table->unsignedBigInteger('id_llista_compra');
             $table->string('etiqueta_producte', 50); 

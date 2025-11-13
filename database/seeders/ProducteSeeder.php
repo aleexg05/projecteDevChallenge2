@@ -18,8 +18,7 @@ class ProducteSeeder extends Seeder
      DB::table('productes')->insert([
             [
                 'id_producte' => 1,
-                'nom_producte' => 'Plàtan', 
-                'comprat' => true,
+                'nom_producte' => 'Plàtan',
                 'id_categoria' => 1,
                 'id_llista_compra' => 1,
                 'etiqueta_producte' => 'Bonpreu',
