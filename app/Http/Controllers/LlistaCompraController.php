@@ -110,6 +110,16 @@ $llista->save();
 
     return redirect()->route('llistes.index')->with('success', 'Llista eliminada correctament.');
 }
+public function editarNom($id)
+{
+    // Busquem la llista per ID i usuari autenticat
+    $llista = LlistaCompra::where('id_llista_compra', $id)
+                          ->where('user_id', Auth::id())
+                          ->firstOrFail();
+
+    // Retornem la vista editarNom.blade.php amb la llista
+    return view('llistes.editarNom', compact('llista'));
+}
 
 }
 

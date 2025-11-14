@@ -4,36 +4,112 @@
 
 @section('content')
 <div class="container py-4">
-    <h1 class="mb-4 text-center text-primary">🛒 Les meves llistes de compra</h1>
+    <style>
+  /* Botons principals centrats i separats */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+/* Botó de crear llista més avall i a la dreta */
+.create-button {
+    text-align: right;
+    margin-right:60px;
+    margin-bottom: 32px;
+    
+}
+
+/* Botons generals */
+.btn {
+    padding: 12px 20px;
+    border-radius: 6px;
+    font-size: 15px;
+    text-decoration: none;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    transition: all 0.2s ease;
+    display: inline-block;
+    margin-left:20px;
+    margin-bottom:20px; 
+}
+
+.btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* Variants minimalistes */
+.btn-outline-primary {
+    border-color: #444;
+    color: #444;
+}
+.btn-outline-primary:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.btn-outline-secondary {
+    border-color: #888;
+    color: #888;
+}
+.btn-outline-secondary:hover {
+    background-color: #888;
+    color: #fff;
+}
+
+.btn-main {
+    border-color: #222;
+    color: #222;
+    font-weight: 500;
+}
+.btn-main:hover {
+    background-color: #222;
+    color: #fff;
+}#nomLlista{
+    margin-left:20px;
+    margin-bottom:40px;
+}#botoEditar{
+margin-top:10px;
+}
+
+
+
+    </style>
+
+    <!-- Botons superiors -->
+    <!-- Botons principals -->
+<div class="button-group text-center mb-5">
+    <a href="{{ route('llistes.index') }}" class="btn btn-outline-primary">Les meves llistes</a>
+    <a href="{{ route('llistes.index') }}" class="btn btn-outline-secondary">Llistes compartides amb mi</a>
+</div>
+
+<!-- Botó de crear llista -->
+<div class="create-button">
+    <a href="{{ route('llistes.create') }}" class="btn btn-main">+ Crear llista</a>
+</div>
+
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <!-- Botó per crear nova llista -->
-    <div class="mb-4 text-end">
-        <a href="{{ route('llistes.create') }}" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Nova llista
-        </a>
-    </div>
-
+    <!-- Llistes -->
     @if($llistes->count())
         <ul class="list-group">
             @foreach($llistes as $llista)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div>
-                        <strong>{{ $llista->nom }}</strong>
-                        <span class="text-muted ms-2">ID: {{ $llista->id_llista_compra }}</span>
-                    </div>
+                    <strong id="nomLlista">{{ $llista->nom }}</strong>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-warning btn-sm">
-                            <i class="bi bi-pencil-square"></i> Editar
+                        <a id="botoEditar" href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-sm btn-outline-warning">
+                            Editar
                         </a>
                         <form action="{{ route('llistes.eliminar', $llista->id_llista_compra) }}" method="POST" onsubmit="return confirm('Segur que vols eliminar aquesta llista?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                <i class="bi bi-trash"></i> Eliminar
+                            <button id="botoEliminar" type="submit" class="btn btn-sm btn-outline-danger">
+                                Eliminar
                             </button>
                         </form>
                     </div>

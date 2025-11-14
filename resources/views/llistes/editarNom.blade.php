@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('títol', 'Editar categoria')
+@section('títol', 'Canviar nom de la llista')
 
 @section('content')
 <style>
@@ -38,25 +38,19 @@
 
 </style>
 <div class="container py-4">
-    <h1 class="mb-4 text-center text-warning">✏️ Editar categoria</h1>
+    <h1 class="mb-4 text-center text-primary">✏️ Canviar nom de la llista</h1>
 
-    <form action="{{ route('categoria.actualitzar', $categoria->id_categoria) }}" method="POST">
+    <form action="{{ route('llistes.actualitzar', $llista->id_llista_compra) }}" method="POST">
         @csrf
         @method('PUT')
 
-        @if(!empty($categoria->id_llista_compra))
-            <input type="hidden" name="id_llista_compra" value="{{ $categoria->id_llista_compra }}">
-        @endif
-
         <div class="mb-3">
-            <label for="nom_categoria" class="form-label">Nom de la categoria</label>
-            <input type="text" name="nom_categoria" id="nom_categoria" class="form-control"
-                   value="{{ old('nom_categoria', $categoria->nom_categoria) }}" required>
+            <label for="nom" class="form-label">Nou nom</label>
+            <input type="text" name="nom" id="nom" class="form-control" value="{{ old('nom', $llista->nom) }}" required>
         </div>
 
-        <button type="submit" class="btn btn-outline-primary">Desar canvis</button>
-<a href="{{ route('categoria.index') }}" class="btn btn-outline-secondary">Cancel·lar</a>
-
+        <button type="submit" class="btn btn-primary">Desar canvis</button>
+        <a href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-secondary">Cancel·lar</a>
     </form>
 </div>
 @endsection

@@ -10,6 +10,20 @@ use Illuminate\Support\Facades\Auth;
 
 class ProducteController extends Controller
 {
+  public function index($id)
+{
+    $llista = \App\Models\LlistaCompra::with('productes.categoria')
+        ->where('id_llista_compra', $id)
+        ->where('user_id', auth()->id())
+        ->firstOrFail();
+
+    $productes = $llista->productes;
+
+    return view('producte.index', compact('llista', 'productes'));
+}
+
+
+
     // Formulari per crear un producte dins d'una llista
     public function create($id_llista)
     {
