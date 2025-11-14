@@ -10,6 +10,32 @@ class CategoriaController extends Controller
     /**
      * Mostra totes les categories.
      */
+    public function index()
+    {
+        $categories = Categoria::all();
+        return view('categoria.index', compact('categories'));
+    }
+    public function editar($id_categoria)
+{
+    $categoria = Categoria::findOrFail($id_categoria);
+
+    return view('categoria.editar', compact('categoria'));
+}
+
+
+    public function eliminar($id)
+{
+    $categoria = Categoria::findOrFail($id);
+
+    // Eliminar productes associats abans d’eliminar la categoria
+    $categoria->productes()->delete();
+
+    $categoria->delete();
+
+    return redirect()->route('categoria.index')
+                     ->with('success', 'Categoria i productes eliminats correctament.');
+}
+
     public function create($id_llista)
 {
     return view('categoria.create', compact('id_llista'));
@@ -28,7 +54,6 @@ public function store(Request $request, $id_llista)
     return redirect()->route('llistes.editar', $id_llista)
                      ->with('success', 'Categoria creada correctament!');
 }
-
 public function actualitzar(Request $request, $id_categoria)
 {
     $request->validate([
@@ -39,12 +64,11 @@ public function actualitzar(Request $request, $id_categoria)
     $categoria->nom_categoria = $request->nom_categoria;
     $categoria->save();
 
-    // Si vols redirigir a una llista concreta, cal passar l'id
-    $id_llista = $request->input('id_llista_compra');
-
-    return redirect()->route('llistes.editar', $id_llista)
+    // 👉 Aquí fem la redirecció cap a l’índex de categories
+    return redirect()->route('categoria.index')
                      ->with('success', 'Categoria actualitzada correctament!');
 }
+
 
 
 }

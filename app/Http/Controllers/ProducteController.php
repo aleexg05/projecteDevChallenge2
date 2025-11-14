@@ -61,21 +61,38 @@ class ProducteController extends Controller
     }
 
     // Actualitza el producte
-    public function actualitzar(Request $request, $id)
-    {
-        $request->validate([
-            'nom_producte' => 'required|string|max:255',
-            'id_categoria' => 'required|exists:categories,id_categoria',
-        ]);
+    public function actualitzar(Request $request, $id_producte)
+{
+    $request->validate([
+        'nom_producte' => 'required|string|max:255',
+        'id_categoria' => 'required|integer',
+        'etiqueta_producte' => 'nullable|string|max:255',
+    ]);
 
-        $producte = Producte::with('llista')
-            ->where('id_producte', $id)
-            ->whereHas('llista', fn($q) => $q->where('user_id', Auth::id()))
-            ->firstOrFail();
+    $producte = Producte::findOrFail($id_producte);
 
-        $producte->update($request->only(['nom_producte', 'id_categoria']));
+    // Actualitzem tots els camps
+    $producte->nom_producte = $request->nom_producte;
+    $producte->id_categoria = $request->id_categoria;
+    $producte->etiqueta_producte = $request->etiqueta_producte;
 
-        return redirect()->route('llistes.editar', $producte->id_llista_compra)
-                         ->with('success', 'Producte actualitzat correctament.');
-    }
+    $producte->save();
+
+    return redirect()->route('llistes.editar', $producte->id_llista_compra)
+                     ->with('success', 'Producte actualitzat correctament!');
+}
+
+    public function eliminar($id)
+{
+    $producte = Producte::with('llista')
+        ->where('id_producte', $id)
+        ->whereHas('llista', fn($q) => $q->where('user_id', Auth::id()))
+        ->firstOrFail();
+
+    $producte->delete();
+
+    return redirect()->route('llistes.editar', $producte->id_llista_compra)
+                     ->with('success', 'Producte eliminat correctament.');
+}
+
 }

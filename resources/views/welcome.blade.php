@@ -37,7 +37,7 @@
                     @if (Route::has('login'))
                         @auth
                             <li class="nav-item">
-                                <a href="{{ url('/dashboard') }}" class="nav-link">Dashboard</a>
+                                <a href="{{ url('/llistes.index') }}" class="nav-link">Dashboard</a>
                             </li>
                         @else
                             <li class="nav-item">

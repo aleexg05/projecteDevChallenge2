@@ -10,13 +10,20 @@
         @csrf
         @method('PUT')
 
+        <!-- Si vols enviar l'id de la llista, el mantenim -->
+        @if(!empty($categoria->id_llista_compra))
+            <input type="hidden" name="id_llista_compra" value="{{ $categoria->id_llista_compra }}">
+        @endif
+
         <div class="mb-3">
             <label for="nom_categoria" class="form-label">Nom de la categoria</label>
-            <input type="text" name="nom_categoria" id="nom_categoria" class="form-control" value="{{ old('nom_categoria', $categoria->nom_categoria) }}" required>
+            <input type="text" name="nom_categoria" id="nom_categoria" class="form-control"
+                   value="{{ old('nom_categoria', $categoria->nom_categoria) }}" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Desar canvis</button>
-        <a href="{{ route('categoria.eliminarCategoria') }}" class="btn btn-secondary">Cancel·lar</a>
+        <a href="{{ route('categoria.index') }}" class="btn btn-secondary">Cancel·lar</a>
+
     </form>
 </div>
 @endsection

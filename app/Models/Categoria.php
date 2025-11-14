@@ -5,25 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
 class Categoria extends Model
 {
-    use HasFactory;
-
-    // Nom de la taula
     protected $table = 'categories';
-
-    // Clau primària personalitzada
     protected $primaryKey = 'id_categoria';
+    public $timestamps = false;
 
-    // Camps que es poden omplir en massa
-    protected $fillable = [
-        'nom_categoria',
-        'descripcio',
-    ];
+    protected $fillable = ['nom_categoria', 'id_llista_compra'];
 
-    // Relació: una categoria té molts productes
+    // Relació amb productes
     public function productes()
     {
-        return $this->hasMany(Producte::class, 'id_categoria', 'id_categoria');
+        return $this->hasMany(Producte::class, 'id_categoria');
     }
 }

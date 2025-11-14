@@ -60,7 +60,23 @@ Route::put('/productes/{id}', [ProducteController::class, 'actualitzar'])->name(
     Route::delete('/productes/{id}', [ProducteController::class, 'eliminar'])->name('productes.eliminar');
     Route::put('/productes/{id}/categoria', [ProducteController::class, 'actualitzarCategoria'])
      ->name('productes.actualitzarCategoria');
+     Route::get('/categories', [CategoriaController::class, 'index'])
+     ->name('categories.index');
+
+Route::delete('/categories/{id}', [CategoriaController::class, 'eliminar'])
+     ->name('categories.eliminar');
 });
+// Ruta per editar una categoria concreta
+Route::get('/categories/{id_categoria}/editar', [CategoriaController::class, 'editar'])
+     ->name('categories.editar');
+
+// Ruta per actualitzar la categoria després d’editar
+Route::put('/categories/{id_categoria}', [CategoriaController::class, 'actualitzar'])
+     ->name('categories.actualitzar');
+     Route::put('/llistes/{id_llista}/productes/{id_producte}/toggle', [LlistaCompraController::class, 'toggleProducte'])
+     ->name('productes.toggle');
+
+
 
 
 
@@ -82,8 +98,7 @@ Route::get('/google-auth/callback', function () {
 
     Auth::login($user, true);
 
-    return redirect('/index');
-});
+ return redirect()->route('llistes.index');});
 
 Route::get('/dashboard', function () {
     return view('dashboard');

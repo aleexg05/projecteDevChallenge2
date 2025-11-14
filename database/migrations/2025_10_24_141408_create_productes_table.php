@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->foreign('id_llista_compra')
                   ->references('id_llista_compra')
                   ->on('llistes_compra')
-                  ->onDelete('restrict');
+                  ->onDelete('cascade');
         });
     }
 

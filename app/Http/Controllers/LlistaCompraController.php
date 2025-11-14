@@ -38,15 +38,37 @@ class LlistaCompraController extends Controller
         return redirect()->route('llistes.index')->with('success', 'Llista creada correctament.');
     }
 
-    public function editar($id)
+   public function editar($id)
 {
-    $llista = LlistaCompra::with('productes.categoria') // carrega productes i la seva categoria
-                ->where('id_llista_compra', $id)
-                ->where('user_id', Auth::id())
-                ->firstOrFail();
+    $llista = LlistaCompra::with('productes.categoria')->findOrFail($id);
 
-    return view('llistes.editar', compact('llista'));
+    // 👉 Variable d’estat temporal (no BD)
+    $estats = session()->get("llista_{$id}_estats", []);
+
+    // Inicialitzem si no existeix
+    foreach ($llista->productes as $producte) {
+        if (!isset($estats[$producte->id_producte])) {
+            $estats[$producte->id_producte] = false;
+        }
+    }
+
+    session()->put("llista_{$id}_estats", $estats);
+
+    return view('llistes.editar', compact('llista', 'estats'));
 }
+public function toggleProducte($id_llista, $id_producte)
+{
+    $estats = session()->get("llista_{$id_llista}_estats", []);
+
+    // Alternem l’estat
+    $estats[$id_producte] = !($estats[$id_producte] ?? false);
+
+    session()->put("llista_{$id_llista}_estats", $estats);
+
+    return redirect()->route('llistes.editar', $id_llista);
+}
+
+
 
 
   public function actualitzar(Request $request, $id)
@@ -72,11 +94,22 @@ $llista->save();
 
 
     public function eliminar($id)
-    {
-        $llista = LlistaCompra::where('id_llista_compra', $id)->where('user_id', Auth::id())->firstOrFail();
-        $llista->delete();
+{
+    $llista = LlistaCompra::where('id_llista_compra', $id)
+                          ->where('user_id', Auth::id())
+                          ->firstOrFail();
 
-        return redirect()->route('llistes.index')->with('success', 'Llista eliminada.');
-    }
+    // Eliminar productes associats
+    $llista->productes()->delete();
+
+    // Eliminar usuaris compartits si tens pivot
+    $llista->usuarisCompartits()->detach();
+
+    // Ara sí, eliminar la llista
+    $llista->delete();
+
+    return redirect()->route('llistes.index')->with('success', 'Llista eliminada correctament.');
+}
+
 }
 
