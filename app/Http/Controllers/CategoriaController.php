@@ -10,10 +10,15 @@ class CategoriaController extends Controller
     /**
      * Mostra totes les categories.
      */
-    public function index()
+    public function index($id_llista)
     {
-        $categories = Categoria::all();
-        return view('categoria.index', compact('categories'));
+        // Carreguem la llista
+        $llista = LlistaCompra::findOrFail($id_llista);
+
+        // Categories només d’aquesta llista
+        $categories = Categoria::where('id_llista_compra', $llista->id_llista_compra)->get();
+
+        return view('categories.index', compact('llista', 'categories'));
     }
     public function editar($id_categoria)
 {
@@ -43,17 +48,21 @@ class CategoriaController extends Controller
 
 public function store(Request $request, $id_llista)
 {
-    $validated = $request->validate([
-        'nom_categoria' => 'required|string|max:100',
+    // Validem el nom
+    $request->validate([
+        'nom_categoria' => 'required|string|max:50',
     ]);
 
+    // Creem la categoria vinculada a la llista
     Categoria::create([
-        'nom_categoria' => $validated['nom_categoria'],
+        'nom_categoria' => $request->nom_categoria,
+        'id_llista_compra' => $id_llista,   // 🔹 aquí vinculem la categoria a la llista
     ]);
 
     return redirect()->route('llistes.editar', $id_llista)
-                     ->with('success', 'Categoria creada correctament!');
+                     ->with('success', 'Categoria creada correctament.');
 }
+
 public function actualitzar(Request $request, $id_categoria)
 {
     $request->validate([

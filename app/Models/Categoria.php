@@ -15,11 +15,15 @@ class Categoria extends Model
     protected $primaryKey = 'id_categoria';
     public $timestamps = false;
 
-    protected $fillable = ['nom_categoria', 'id_llista_compra'];
+    protected $fillable = ['nom_categoria', 'id_llista_compra',];
 
     // Relació amb productes
     public function productes()
     {
         return $this->hasMany(Producte::class, 'id_categoria');
+    }
+     public function llista()
+    {
+        return $this->belongsTo(LlistaCompra::class, 'id_llista_compra');
     }
 }

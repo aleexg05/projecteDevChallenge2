@@ -26,15 +26,14 @@ class ProducteController extends Controller
 
     // Formulari per crear un producte dins d'una llista
     public function create($id_llista)
-    {
-        $llista = LlistaCompra::where('id_llista_compra', $id_llista)
-                              ->where('user_id', Auth::id())
-                              ->firstOrFail();
+{
+    $llista = LlistaCompra::findOrFail($id_llista);
 
-        $categories = Categoria::all();
+    // Categories només d’aquesta llista
+    $categories = Categoria::where('id_llista_compra', $id_llista)->get();
 
-        return view('producte.create', compact('llista', 'categories'));
-    }
+    return view('producte.create', compact('llista', 'categories'));
+}
 
     // Desa el producte
     public function store(Request $request, $id_llista)
@@ -62,17 +61,12 @@ class ProducteController extends Controller
 
     // Formulari per editar
     public function editar($id)
-    {
-        $producte = Producte::with('llista')->findOrFail($id);
+{
+    $producte = Producte::findOrFail($id);
+    $categories = Categoria::where('id_llista_compra', $producte->id_llista_compra)->get();
 
-        if ($producte->llista->user_id !== Auth::id()) {
-            abort(403);
-        }
-
-        $categories = Categoria::all();
-
-        return view('producte.editar', compact('producte', 'categories'));
-    }
+    return view('producte.editar', compact('producte', 'categories'));
+}
 
     // Actualitza el producte
     public function actualitzar(Request $request, $id_producte)

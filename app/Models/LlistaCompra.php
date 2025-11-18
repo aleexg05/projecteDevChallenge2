@@ -31,4 +31,8 @@ class LlistaCompra extends Model
     {
         return $this->belongsToMany(User::class, 'usuaris_llistes_compra', 'id_llista_compra', 'user_id');
     }
+    public function categories()
+    {
+        return $this->hasMany(Categoria::class, 'id_llista_compra');
+    }
 }

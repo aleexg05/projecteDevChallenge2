@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/llistes/{id}/categories/create', [CategoriaController::class, 'create'])->name('categories.create');
     Route::post('/llistes/{id}/categories', [CategoriaController::class, 'store'])->name('categories.store');
+Route::get('/llistes/{id}/categories', [CategoriaController::class, 'index'])
+    ->name('categories.index');
 
     Route::post('/categories', [CategoriaController::class, 'store'])->name('categories.store');
     Route::get('/categories/{id}/editar', [CategoriaController::class, 'editar'])->name('categories.editar');
