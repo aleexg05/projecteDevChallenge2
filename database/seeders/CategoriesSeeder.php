@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Carbon;
+use App\Models\Categoria;
+use App\Models\LlistaCompra;
 
 class CategoriesSeeder extends Seeder
 {
@@ -13,29 +14,36 @@ class CategoriesSeeder extends Seeder
      */
     public function run(): void
     {
-        // Suposem que existeix una llista amb id_llista_compra = 1
-        DB::table('categories')->insert([
-            [
-                'id_categoria' => 1,
-                'nom_categoria' => 'Begudes',
-                'id_llista_compra' => 1, // 🔹 vinculem la categoria a la llista 1
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'id_categoria' => 2,
-                'nom_categoria' => 'Snacks',
-                'id_llista_compra' => 1,
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-            [
-                'id_categoria' => 3,
-                'nom_categoria' => 'Fruites i verdures',
-                'id_llista_compra' => 2, // 🔹 aquesta categoria pertany a la llista 2
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),
-            ],
-        ]);
+        // Obtenim la primera llista de compra (o crea una si no existeix)
+        $llista = LlistaCompra::first();
+        
+        if (!$llista) {
+            $llista = LlistaCompra::create([
+                'nom' => 'Llista de la compra',
+                'user_id' => 1, // Assegura't que existeix un usuari amb ID 1
+            ]);
+        }
+
+        $categories = [
+            'Fruites i verdures',
+            'Carn i peix',
+            'Làctics i ous',
+            'Pa i pastisseria',
+            'Congelats',
+            'Begudes',
+            'Conserves',
+            'Pasta i arròs',
+            'Snacks i dolços',
+            'Neteja',
+            'Higiene personal',
+            'Altres',
+        ];
+
+        foreach ($categories as $nom) {
+            Categoria::create([
+                'nom_categoria' => $nom,
+                'id_llista_compra' => $llista->id_llista_compra,
+            ]);
+        }
     }
 }

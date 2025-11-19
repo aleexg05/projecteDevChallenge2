@@ -21,7 +21,7 @@ class CategoriaController extends Controller
 
         return view('categoria.index', compact('llista', 'categories'));
     }
-    
+
     public function editar($id_categoria)
     {
         $categoria = Categoria::findOrFail($id_categoria);
@@ -34,13 +34,16 @@ class CategoriaController extends Controller
     {
         $categoria = Categoria::findOrFail($id);
 
-        // Eliminar productes associats abans d’eliminar la categoria
+        // Guardem l'ID de la llista abans d'eliminar
+        $id_llista = $categoria->id_llista_compra;
+
+        // Eliminar productes associats abans d'eliminar la categoria
         $categoria->productes()->delete();
 
         $categoria->delete();
 
-        return redirect()->route('categoria.index')
-            ->with('success', 'Categoria i productes eliminats correctament.');
+        return redirect()->route('categories.index', $id_llista)
+            ->with('success', 'Categoria eliminada correctament');
     }
 
     public function create($id_llista)
@@ -72,11 +75,15 @@ class CategoriaController extends Controller
         ]);
 
         $categoria = Categoria::findOrFail($id_categoria);
+
+        // Guardem l'ID de la llista abans d'actualitzar
+        $id_llista = $categoria->id_llista_compra;
+
         $categoria->nom_categoria = $request->nom_categoria;
         $categoria->save();
 
-        // 👉 Aquí fem la redirecció cap a l’índex de categories
-        return redirect()->route('categoria.index')
+        // 👉 Passem l'ID de la llista a la ruta
+        return redirect()->route('categories.index', $id_llista)
             ->with('success', 'Categoria actualitzada correctament!');
     }
 }

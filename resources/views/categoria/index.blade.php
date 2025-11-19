@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('títol', 'Gestionar categories')
@@ -46,16 +47,23 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Botó per crear nova categoria -->
+    <div class="create-button mb-4">
+        <a href="{{ route('categories.create', $llista->id_llista_compra) }}" class="btn btn-outline-primary">
+            ➕ Crear nova categoria
+        </a>
+    </div>
+
     @if($categories->count())
         <ul class="list-group">
             @foreach($categories as $categoria)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <span>{{ $categoria->nom_categoria }}</span>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('categoria.editar', [$llista->id_llista_compra, $categoria->id_categoria]) }}" class="btn btn-sm btn-outline-warning">
+                        <a href="{{ route('categories.editar', $categoria->id_categoria) }}" class="btn btn-sm btn-outline-warning">
                             Editar
                         </a>
-                        <form action="{{ route('categoria.eliminar', [$llista->id_llista_compra, $categoria->id_categoria]) }}" method="POST" onsubmit="return confirm('Eliminar categoria?');">
+                        <form action="{{ route('categories.eliminar', $categoria->id_categoria) }}" method="POST" onsubmit="return confirm('Eliminar categoria?');">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
@@ -76,4 +84,4 @@
         </a>
     </div>
 </div>
-@endsection
+@endsection 
