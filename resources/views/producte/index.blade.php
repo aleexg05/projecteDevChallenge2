@@ -4,52 +4,135 @@
 
 @section('content')
 <style>
-/* Estil minimalista coherent */
-.btn {
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: 14px;
-    text-decoration: none;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    transition: all 0.2s ease;
-    display: inline-block;
-}
-.btn:hover { background-color: #f0f0f0; }
+    /* Títols */
+    h1 {
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        margin-bottom: 0;
+    }
 
-.btn-outline-primary { border-color: #444; color: #444; }
-.btn-outline-primary:hover { background-color: #444; color: #fff; }
+    /* Text general */
+    body, p, label, span, div, strong {
+        color: #ffffff;
+    }
 
-.btn-outline-secondary { border-color: #888; color: #888; }
-.btn-outline-secondary:hover { background-color: #888; color: #fff; }
+    .text-muted {
+        color: rgba(255, 255, 255, 0.6) !important;
+    }
 
-.btn-outline-warning { border-color: #ffc107; color: #ffc107; }
-.btn-outline-warning:hover { background-color: #ffc107; color: #000; }
+    /* Botons */
+    .btn {
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transition: all 0.2s ease;
+        display: inline-block;
+    }
 
-.btn-outline-danger { border-color: #dc3545; color: #dc3545; }
-.btn-outline-danger:hover { background-color: #dc3545; color: #fff; }
+    .btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-.list-group { list-style: none; padding: 0; margin: 0; }
-.list-group-item {
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    margin-bottom: 12px;
-    background: #fafafa;
-    padding: 16px;
-}
+    .btn-outline-primary {
+        border-color: #a78bfa;
+        color: #a78bfa;
+        background-color: rgba(167, 139, 250, 0.1);
+    }
+    .btn-outline-primary:hover {
+        background-color: #a78bfa;
+        color: #1a0b2e;
+    }
 
-.header-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-}
+    .btn-outline-secondary {
+        border-color: #60a5fa;
+        color: #60a5fa;
+        background-color: rgba(96, 165, 250, 0.1);
+    }
+    .btn-outline-secondary:hover {
+        background-color: #60a5fa;
+        color: #0f3460;
+    }
+
+    .btn-outline-warning {
+        border-color: #ffc107;
+        color: #ffc107;
+        background-color: rgba(255, 193, 7, 0.1);
+    }
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    .btn-outline-danger {
+        border-color: #ef4444;
+        color: #ef4444;
+        background-color: rgba(239, 68, 68, 0.1);
+    }
+    .btn-outline-danger:hover {
+        background-color: #ef4444;
+        color: #fff;
+    }
+
+    .list-group {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .list-group-item {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        padding: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+    }
+
+    .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        color: #fff;
+    }
+
+    .alert-success {
+        background: rgba(34, 197, 94, 0.15);
+        border-color: rgba(34, 197, 94, 0.5);
+    }
+
+    .alert-info {
+        background: rgba(96, 165, 250, 0.15);
+        border-color: rgba(96, 165, 250, 0.5);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 </style>
 
 <div class="container py-4">
     <div class="header-actions">
-        <h1 class="mb-0">📦 Gestionar productes — {{ $llista->nom }}</h1>
+        <h1>📦 Gestionar productes — {{ $llista->nom }}</h1>
         <div class="d-flex gap-2">
             <a href="{{ route('productes.create', $llista->id_llista_compra) }}" class="btn btn-outline-primary">➕ Afegir producte</a>
             <a href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-outline-secondary">← Tornar a la llista</a>

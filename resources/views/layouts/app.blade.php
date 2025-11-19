@@ -6,7 +6,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-
         <title>@yield('títol', config('app.name', 'Laravel'))</title>
 
         <!-- Fonts -->
@@ -15,6 +14,21 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
+        <!-- Estils personalitzats -->
+        <style>
+            /* Fons gradient lila fosc i blau fosc per a tota la web */
+            body {
+                background: linear-gradient(135deg, #1a0b2e 0%, #16213e 50%, #0f3460 100%) !important;
+                background-attachment: fixed;
+                min-height: 100vh;
+                margin: 0;
+            }
+
+            .bg-gray-100 {
+                background: transparent !important;
+            }
+        </style>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">

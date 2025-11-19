@@ -4,41 +4,103 @@
 
 @section('content')
 <style>
+    /* Títols */
+    h1, h2, h3, h4, h5 {
+        color: #ffffff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Text general */
+    body, p, label, span, div {
+        color: #ffffff;
+    }
+
+    /* Formularis */
+    .form-control, input, textarea, select {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: #ffffff;
+        backdrop-filter: blur(10px);
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+    }
+
+    .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-control:focus {
+        background: rgba(255, 255, 255, 0.15);
+        border-color: #a78bfa;
+        color: #ffffff;
+        box-shadow: 0 0 0 0.2rem rgba(167, 139, 250, 0.25);
+        outline: none;
+    }
+
+    .form-label {
+        color: #ffffff;
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    /* Botons */
     .btn {
-    padding: 10px 18px;
-    border-radius: 6px;
-    font-size: 14px;
-    text-decoration: none;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    color: #333;
-    transition: all 0.2s ease;
-    display: inline-block;
-}
-.btn:hover { background-color: #f0f0f0; }
+        padding: 10px 18px;
+        border-radius: 6px;
+        font-size: 14px;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transition: all 0.2s ease;
+        display: inline-block;
+        margin-right: 10px;
+    }
 
-.btn-outline-primary { border-color: #444; color: #444; }
-.btn-outline-primary:hover { background-color: #444; color: #fff; }
+    .btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-.btn-outline-secondary { border-color: #888; color: #888; }
-.btn-outline-secondary:hover { background-color: #888; color: #fff; }
+    .btn-outline-primary,
+    .btn-primary {
+        border-color: #a78bfa;
+        color: #a78bfa;
+        background-color: rgba(167, 139, 250, 0.1);
+    }
+    .btn-outline-primary:hover,
+    .btn-primary:hover {
+        background-color: #a78bfa;
+        color: #1a0b2e;
+    }
 
-.btn-outline-warning { border-color: #ffc107; color: #ffc107; }
-.btn-outline-warning:hover { background-color: #ffc107; color: #000; }
+    .btn-outline-secondary,
+    .btn-secondary {
+        border-color: #60a5fa;
+        color: #60a5fa;
+        background-color: rgba(96, 165, 250, 0.1);
+    }
+    .btn-outline-secondary:hover,
+    .btn-secondary:hover {
+        background-color: #60a5fa;
+        color: #0f3460;
+    }
 
-.btn-outline-danger { border-color: #dc3545; color: #dc3545; }
-.btn-outline-danger:hover { background-color: #dc3545; color: #fff; }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+    }
 
-.btn-main { border-color: #222; color: #222; font-weight: 500; }
-.btn-main:hover { background-color: #222; color: #fff; }
-
-.button-group { display: flex; gap: 24px; justify-content: center; margin-bottom: 32px; }
-.create-button { text-align: right; margin-bottom: 32px; }
-.list-group-item { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 12px; background: #fafafa; padding: 16px; }
-
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+    }
 </style>
 <div class="container py-4">
-    <h1 class="mb-4 text-center text-primary">✏️ Canviar nom de la llista</h1>
+    <h1 class="mb-4">✏️ Canviar nom de la llista</h1>
 
     <form action="{{ route('llistes.actualitzar', $llista->id_llista_compra) }}" method="POST">
         @csrf
@@ -49,8 +111,10 @@
             <input type="text" name="nom" id="nom" class="form-control" value="{{ old('nom', $llista->nom) }}" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Desar canvis</button>
-        <a href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-secondary">Cancel·lar</a>
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">✅ Desar canvis</button>
+            <a href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-secondary">❌ Cancel·lar</a>
+        </div>
     </form>
 </div>
 @endsection

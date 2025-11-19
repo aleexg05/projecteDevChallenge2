@@ -1,45 +1,149 @@
-
 @extends('layouts.app')
 
 @section('títol', 'Gestionar categories')
 
 @section('content')
 <style>
+    /* Botó de crear categoria més avall i a la dreta */
+    .create-button {
+        text-align: right;
+        margin-right: 60px;
+        margin-bottom: 32px;
+    }
+
+    /* Botons generals */
     .btn {
-        padding: 10px 18px;
+        padding: 12px 20px;
         border-radius: 6px;
-        font-size: 14px;
+        font-size: 15px;
         text-decoration: none;
-        border: 1px solid #ccc;
-        background-color: #fff;
-        color: #333;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
         transition: all 0.2s ease;
         display: inline-block;
+        margin-left: 20px;
+        margin-bottom: 20px;
     }
-    .btn:hover { background-color: #f0f0f0; }
 
-    .btn-outline-primary { border-color: #444; color: #444; }
-    .btn-outline-primary:hover { background-color: #444; color: #fff; }
+    .btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-    .btn-outline-secondary { border-color: #888; color: #888; }
-    .btn-outline-secondary:hover { background-color: #888; color: #fff; }
+    /* Variants minimalistes */
+    .btn-outline-primary {
+        border-color: #a78bfa;
+        color: #a78bfa;
+        background-color: rgba(167, 139, 250, 0.1);
+    }
+    .btn-outline-primary:hover {
+        background-color: #a78bfa;
+        color: #1a0b2e;
+    }
 
-    .btn-outline-warning { border-color: #ffc107; color: #ffc107; }
-    .btn-outline-warning:hover { background-color: #ffc107; color: #000; }
+    .btn-outline-secondary {
+        border-color: #60a5fa;
+        color: #60a5fa;
+        background-color: rgba(96, 165, 250, 0.1);
+    }
+    .btn-outline-secondary:hover {
+        background-color: #60a5fa;
+        color: #0f3460;
+    }
 
-    .btn-outline-danger { border-color: #dc3545; color: #dc3545; }
-    .btn-outline-danger:hover { background-color: #dc3545; color: #fff; }
+    .btn-outline-warning {
+        border-color: #ffc107;
+        color: #ffc107;
+        background-color: rgba(255, 193, 7, 0.1);
+    }
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        color: #000;
+    }
 
-    .btn-main { border-color: #222; color: #222; font-weight: 500; }
-    .btn-main:hover { background-color: #222; color: #fff; }
+    .btn-outline-danger {
+        border-color: #ef4444;
+        color: #ef4444;
+        background-color: rgba(239, 68, 68, 0.1);
+    }
+    .btn-outline-danger:hover {
+        background-color: #ef4444;
+        color: #fff;
+    }
 
-    .button-group { display: flex; gap: 24px; justify-content: center; margin-bottom: 32px; }
-    .create-button { text-align: right; margin-bottom: 32px; }
-    .list-group-item { border: 1px solid #e0e0e0; border-radius: 6px; margin-bottom: 12px; background: #fafafa; padding: 16px; }
+    .btn-main {
+        border: none;
+        background: linear-gradient(135deg, #a78bfa, #60a5fa);
+        color: #1a0b2e;
+        font-weight: 600;
+    }
+    .btn-main:hover {
+        background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        color: #fff;
+    }
+
+    #nomCategoria {
+        margin-left: 20px;
+        margin-bottom: 40px;
+        color: #ffffff;
+        font-size: 18px;
+    }
+
+    #botoEditar {
+        margin-top: 10px;
+    }
+
+    .list-group-item {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .list-group-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+        transform: translateX(5px);
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        color: #fff;
+    }
+
+    .alert-success {
+        border-color: rgba(34, 197, 94, 0.5);
+        background: rgba(34, 197, 94, 0.15);
+    }
+
+    .alert-info {
+        border-color: rgba(96, 165, 250, 0.5);
+        background: rgba(96, 165, 250, 0.15);
+    }
+
+    h1 {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 </style>
 
 <div class="container py-4">
-    <h1 class="mb-4 text-center text-info">
+    <h1 class="mb-4 text-center">
         🏷️ Categories de la llista: {{ $llista->nom }}
     </h1>
 
@@ -47,26 +151,27 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
-    <!-- Botó per crear nova categoria -->
-    <div class="create-button mb-4">
-        <a href="{{ route('categories.create', $llista->id_llista_compra) }}" class="btn btn-outline-primary">
-            ➕ Crear nova categoria
-        </a>
+    <!-- Botó de crear categoria -->
+    <div class="create-button">
+        <a href="{{ route('categories.create', $llista->id_llista_compra) }}" class="btn btn-main">+ Crear categoria</a>
     </div>
 
+    <!-- Categories -->
     @if($categories->count())
         <ul class="list-group">
             @foreach($categories as $categoria)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>{{ $categoria->nom_categoria }}</span>
+                    <strong id="nomCategoria">{{ $categoria->nom_categoria }}</strong>
                     <div class="d-flex gap-2">
-                        <a href="{{ route('categories.editar', $categoria->id_categoria) }}" class="btn btn-sm btn-outline-warning">
+                        <a id="botoEditar" href="{{ route('categories.editar', $categoria->id_categoria) }}" class="btn btn-sm btn-outline-warning">
                             Editar
                         </a>
-                        <form action="{{ route('categories.eliminar', $categoria->id_categoria) }}" method="POST" onsubmit="return confirm('Eliminar categoria?');">
+                        <form action="{{ route('categories.eliminar', $categoria->id_categoria) }}" method="POST" onsubmit="return confirm('Segur que vols eliminar aquesta categoria?');">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
+                            <button id="botoEliminar" type="submit" class="btn btn-sm btn-outline-danger">
+                                Eliminar
+                            </button>
                         </form>
                     </div>
                 </li>
@@ -74,7 +179,7 @@
         </ul>
     @else
         <div class="alert alert-info text-center">
-            No hi ha categories creades per aquesta llista.
+            No hi ha categories creades per aquesta llista. <a href="{{ route('categories.create', $llista->id_llista_compra) }}" style="color: #a78bfa; text-decoration: underline;">Crea una nova categoria</a>.
         </div>
     @endif
 
@@ -84,4 +189,4 @@
         </a>
     </div>
 </div>
-@endsection 
+@endsection
