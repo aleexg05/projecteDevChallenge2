@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 
 
-
+use App\Models\Categoria;
 use App\Models\LlistaCompra;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,20 +42,21 @@ class LlistaCompraController extends Controller
 {
     $llista = LlistaCompra::with('productes.categoria')->findOrFail($id);
 
-    // 👉 Variable d’estat temporal (no BD)
-    $estats = session()->get("llista_{$id}_estats", []);
+    // Carreguem només les categories d’aquesta llista
+    $categories = Categoria::where('id_llista_compra', $llista->id_llista_compra)->get();
 
-    // Inicialitzem si no existeix
+    // Estats temporals dels productes
+    $estats = session()->get("llista_{$id}_estats", []);
     foreach ($llista->productes as $producte) {
         if (!isset($estats[$producte->id_producte])) {
             $estats[$producte->id_producte] = false;
         }
     }
-
     session()->put("llista_{$id}_estats", $estats);
 
-    return view('llistes.editar', compact('llista', 'estats'));
+    return view('llistes.editar', compact('llista', 'categories', 'estats'));
 }
+
 public function toggleProducte($id_llista, $id_producte)
 {
     $estats = session()->get("llista_{$id_llista}_estats", []);

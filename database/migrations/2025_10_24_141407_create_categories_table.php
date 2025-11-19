@@ -11,7 +11,10 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_categoria');
             $table->primary('id_categoria');
 
+
             $table->string('nom_categoria', 20);
+            $table->unsignedBigInteger('id_llista_compra')->after('id_categoria');
+    $table->foreign('id_llista_compra')->references('id_llista_compra')->on('llistes_compra')->onDelete('cascade');
             $table->timestamps();
         });
     }
