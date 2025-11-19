@@ -8,13 +8,13 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_categoria');
-            $table->primary('id_categoria');
-
-
+            $table->id('id_categoria'); // Cambiado: usa id() para autoincremento
             $table->string('nom_categoria', 20);
-            $table->unsignedBigInteger('id_llista_compra')->after('id_categoria');
-    $table->foreign('id_llista_compra')->references('id_llista_compra')->on('llistes_compra')->onDelete('cascade');
+            $table->unsignedBigInteger('id_llista_compra');
+            $table->foreign('id_llista_compra')
+                  ->references('id_llista_compra')
+                  ->on('llistes_compra')
+                  ->onDelete('cascade');
             $table->timestamps();
         });
     }
