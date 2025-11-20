@@ -30,9 +30,15 @@ class User extends Authenticatable
     }
 
     // Llistes creades per l'usuari (propietari)
-    public function llistesCompra()
+    public function llistesCreades()
     {
         return $this->hasMany(LlistaCompra::class, 'user_id');
+    }
+
+    // També mantenir l'àlies per compatibilitat
+    public function llistesCompra()
+    {
+        return $this->llistesCreades();
     }
 
     // Llistes compartides amb l'usuari
@@ -46,6 +52,6 @@ class User extends Authenticatable
     // Totes les llistes a les quals té accés (pròpies + compartides)
     public function totesLesLlistes()
     {
-        return $this->llistesCompra->merge($this->llistesCompartides);
+        return $this->llistesCreades->merge($this->llistesCompartides);
     }
 }
