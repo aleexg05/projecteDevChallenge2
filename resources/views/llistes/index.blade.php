@@ -4,156 +4,161 @@
 
 @section('content')
 <style>
-/* Botons principals centrats i separats */
-.button-group {
-    display: flex;
-    justify-content: center;
-    gap: 32px;
-    margin-bottom: 40px;
-}
+    /* Botons principals centrats i separats */
+    .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 32px;
+        margin-bottom: 40px;
+    }
 
-/* Botó de crear llista més avall i a la dreta */
-.create-button {
-    text-align: right;
-    margin-right: 60px;
-    margin-bottom: 32px;
-}
+    /* Botó de crear llista més avall i a la dreta */
+    .create-button {
+        text-align: right;
+        margin-right: 60px;
+        margin-bottom: 32px;
+    }
 
-/* Botons generals */
-.btn {
-    padding: 12px 20px;
-    border-radius: 6px;
-    font-size: 15px;
-    text-decoration: none;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background-color: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    transition: all 0.2s ease;
-    display: inline-block;
-    margin-left: 20px;
-    margin-bottom: 20px;
-}
+    /* Botons generals */
+    .btn {
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 15px;
+        text-decoration: none;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        transition: all 0.2s ease;
+        display: inline-block;
+        margin-left: 20px;
+        margin-bottom: 20px;
+    }
 
-.btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
+    .btn:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
 
-/* Variants minimalistes */
-.btn-outline-primary {
-    border-color: #a78bfa;
-    color: #a78bfa;
-    background-color: rgba(167, 139, 250, 0.1);
-}
-.btn-outline-primary:hover {
-    background-color: #a78bfa;
-    color: #1a0b2e;
-}
+    /* Variants minimalistes */
+    .btn-outline-primary {
+        border-color: #a78bfa;
+        color: #a78bfa;
+        background-color: rgba(167, 139, 250, 0.1);
+    }
 
-.btn-outline-secondary {
-    border-color: #60a5fa;
-    color: #60a5fa;
-    background-color: rgba(96, 165, 250, 0.1);
-}
-.btn-outline-secondary:hover {
-    background-color: #60a5fa;
-    color: #0f3460;
-}
+    .btn-outline-primary:hover {
+        background-color: #a78bfa;
+        color: #1a0b2e;
+    }
 
-.btn-outline-warning {
-    border-color: #ffc107;
-    color: #ffc107;
-    background-color: rgba(255, 193, 7, 0.1);
-}
-.btn-outline-warning:hover {
-    background-color: #ffc107;
-    color: #000;
-}
+    .btn-outline-secondary {
+        border-color: #60a5fa;
+        color: #60a5fa;
+        background-color: rgba(96, 165, 250, 0.1);
+    }
 
-.btn-outline-danger {
-    border-color: #ef4444;
-    color: #ef4444;
-    background-color: rgba(239, 68, 68, 0.1);
-}
-.btn-outline-danger:hover {
-    background-color: #ef4444;
-    color: #fff;
-}
+    .btn-outline-secondary:hover {
+        background-color: #60a5fa;
+        color: #0f3460;
+    }
 
-.btn-main {
-    border: none;
-    background: linear-gradient(135deg, #a78bfa, #60a5fa);
-    color: #1a0b2e;
-    font-weight: 600;
-}
-.btn-main:hover {
-    background: linear-gradient(135deg, #8b5cf6, #3b82f6);
-    color: #fff;
-}
+    .btn-outline-warning {
+        border-color: #ffc107;
+        color: #ffc107;
+        background-color: rgba(255, 193, 7, 0.1);
+    }
 
-#nomLlista {
-    margin-left: 20px;
-    margin-bottom: 40px;
-    color: #ffffff;
-    font-size: 18px;
-}
+    .btn-outline-warning:hover {
+        background-color: #ffc107;
+        color: #000;
+    }
 
-#botoEditar {
-    margin-top: 10px;
-}
+    .btn-outline-danger {
+        border-color: #ef4444;
+        color: #ef4444;
+        background-color: rgba(239, 68, 68, 0.1);
+    }
 
-.list-group-item {
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
-    margin-bottom: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(10px);
-    transition: all 0.3s ease;
-}
+    .btn-outline-danger:hover {
+        background-color: #ef4444;
+        color: #fff;
+    }
 
-.list-group-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
-    transform: translateX(5px);
-}
+    .btn-main {
+        border: none;
+        background: linear-gradient(135deg, #a78bfa, #60a5fa);
+        color: #1a0b2e;
+        font-weight: 600;
+    }
 
-.alert {
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    color: #fff;
-}
+    .btn-main:hover {
+        background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        color: #fff;
+    }
 
-.alert a {
-    color: #a78bfa;
-    text-decoration: underline;
-}
+    #nomLlista {
+        margin-left: 20px;
+        margin-bottom: 40px;
+        color: #ffffff;
+        font-size: 18px;
+    }
 
-.alert a:hover {
-    color: #c4b5fd;
-}
+    #botoEditar {
+        margin-top: 10px;
+    }
 
-h1 {
-    color: #ffffff;
-    text-align: center;
-    margin-bottom: 30px;
-    font-weight: 600;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+    .list-group-item {
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 8px;
+        margin-bottom: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-}
+    .list-group-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow: 0 4px 12px rgba(167, 139, 250, 0.3);
+        transform: translateX(5px);
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        color: #fff;
+    }
+
+    .alert a {
+        color: #a78bfa;
+        text-decoration: underline;
+    }
+
+    .alert a:hover {
+        color: #c4b5fd;
+    }
+
+    h1 {
+        color: #ffffff;
+        text-align: center;
+        margin-bottom: 30px;
+        font-weight: 600;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 </style>
 
 <div class="container py-4">
     <!-- Botons principals -->
     <div class="button-group text-center mb-5">
         <a href="{{ route('llistes.index') }}" class="btn btn-outline-primary">Les meves llistes</a>
-        <a href="{{ route('llistes.index') }}" class="btn btn-outline-secondary">Llistes compartides amb mi</a>
+        <a href="{{ route('compartir.compartides-amb-mi') }}" class="btn btn-outline-secondary">Llistes compartides amb mi</a>
     </div>
 
     <!-- Botó de crear llista -->
@@ -162,34 +167,34 @@ h1 {
     </div>
 
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
     <!-- Llistes -->
     @if($llistes->count())
-        <ul class="list-group">
-            @foreach($llistes as $llista)
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <strong id="nomLlista">{{ $llista->nom }}</strong>
-                    <div class="d-flex gap-2">
-                        <a id="botoEditar" href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-sm btn-outline-warning">
-                            Editar
-                        </a>
-                        <form action="{{ route('llistes.eliminar', $llista->id_llista_compra) }}" method="POST" onsubmit="return confirm('Segur que vols eliminar aquesta llista?');">
-                            @csrf
-                            @method('DELETE')
-                            <button id="botoEliminar" type="submit" class="btn btn-sm btn-outline-danger">
-                                Eliminar
-                            </button>
-                        </form>
-                    </div>
-                </li>
-            @endforeach
-        </ul>
+    <ul class="list-group">
+        @foreach($llistes as $llista)
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <strong id="nomLlista">{{ $llista->nom }}</strong>
+            <div class="d-flex gap-2">
+                <a id="botoEditar" href="{{ route('llistes.editar', $llista->id_llista_compra) }}" class="btn btn-sm btn-outline-warning">
+                    Editar
+                </a>
+                <form action="{{ route('llistes.eliminar', $llista->id_llista_compra) }}" method="POST" onsubmit="return confirm('Segur que vols eliminar aquesta llista?');">
+                    @csrf
+                    @method('DELETE')
+                    <button id="botoEliminar" type="submit" class="btn btn-sm btn-outline-danger">
+                        Eliminar
+                    </button>
+                </form>
+            </div>
+        </li>
+        @endforeach
+    </ul>
     @else
-        <div class="alert alert-info text-center">
-            No tens cap llista creada. <a href="{{ route('llistes.create') }}">Crea una nova llista</a>.
-        </div>
+    <div class="alert alert-info text-center">
+        No tens cap llista creada. <a href="{{ route('llistes.create') }}">Crea una nova llista</a>.
+    </div>
     @endif
 </div>
 @endsection

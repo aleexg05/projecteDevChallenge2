@@ -2,37 +2,50 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\LlistaCompartida;
 
 class LlistaCompra extends Model
 {
-    use HasFactory;
-
     protected $table = 'llistes_compra';
-
-    protected $primaryKey = 'id_llista_compra'; // 👉 afegeix això
-
+    protected $primaryKey = 'id_llista_compra';
     protected $fillable = ['nom', 'user_id'];
 
-    public $timestamps = true;
+    // ...existing code...
 
-    public function creador()
+    // Llistes compartides amb altres usuaris
+    public function compartides()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->hasMany(LlistaCompartida::class, 'id_llista_compra', 'id_llista_compra');
     }
 
-    public function productes()
-    {
-        return $this->hasMany(Producte::class, 'id_llista_compra', 'id_llista_compra');
-    }
-
+    // Usuaris amb qui està compartida la llista
     public function usuarisCompartits()
     {
-        return $this->belongsToMany(User::class, 'usuaris_llistes_compra', 'id_llista_compra', 'user_id');
+        return $this->belongsToMany(User::class, 'llista_compartida', 'id_llista_compra', 'id_usuari_compartit')
+                    ->withPivot('permis')
+                    ->withTimestamps();
     }
-    public function categories()
+
+    // Comprovar si un usuari té accés a la llista
+    public function teAcces($userId)
     {
-        return $this->hasMany(Categoria::class, 'id_llista_compra');
+        return $this->user_id == $userId || 
+               $this->usuarisCompartits()->where('id', $userId)->exists();
+    }
+
+    // Comprovar si un usuari pot editar
+    public function potEditar($userId)
+    {
+        if ($this->user_id == $userId) {
+            return true; // El propietari sempre pot editar
+        }
+        
+        $compartit = $this->usuarisCompartits()
+                          ->where('id', $userId)
+                          ->first();
+        
+        return $compartit && $compartit->pivot->permis === 'edicio';
     }
 }
