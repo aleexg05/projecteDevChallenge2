@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('id_categoria');
             $table->unsignedBigInteger('id_llista_compra');
             $table->string('etiqueta_producte', 50); 
+            $table->boolean('comprat')->default(false); // 👈 nou camp
             $table->timestamps();
 
             $table->foreign('id_categoria')

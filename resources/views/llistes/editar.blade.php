@@ -15,6 +15,15 @@
         text-decoration: none;
     }
 
+    .categoria-nom {
+        font-weight: 600;
+        font-size: 16px;
+        color: #a78bfa;
+        margin-top: 24px;
+        margin-bottom: 12px;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
+    }
+
     .btn {
         padding: 10px 18px;
         border-radius: 6px;
@@ -148,6 +157,7 @@
         margin: 0 auto;
     }
 </style>
+
 <div class="container py-4">
     <h1 class="mb-4">✏️ Editar llista: {{ $llista->nom }}</h1>
 
@@ -160,21 +170,58 @@
         </a>
     </div>
 
-    <!-- Productes actuals -->
-    <h4 class="mt-4 mb-3">📦 Productes en aquesta llista</h4>
-    @forelse($llista->productes as $producte)
-    <div class="list-group-item">
-        <form action="{{ route('productes.toggle', [$llista->id_llista_compra, $producte->id_producte]) }}" method="POST" style="display:inline;">
-            @csrf
-            @method('PUT')
-            <button type="submit" class="btn btn-link nom-producte {{ $estats[$producte->id_producte] ? 'ratllat' : '' }}">
-                {{ $producte->nom_producte }}
-            </button>
-        </form>
-        <span class="text-muted">({{ $producte->categoria->nom_categoria ?? 'Sense categoria' }})</span>
-    </div>
+    <!-- Productes agrupats per categories -->
+    <h4 class="mt-4 mb-3">📦 Productes en aquesta llista per categories</h4>
+
+    @php
+        $productesPerCategoria = $llista->productes->groupBy(function($producte) {
+            return $producte->categoria->nom_categoria ?? 'Sense categoria';
+        });
+    @endphp
+
+    @forelse($productesPerCategoria as $nomCategoria => $productes)
+        <div class="categoria-nom">🏷️ {{ $nomCategoria }}</div>
+        @foreach($productes as $producte)
+            <div class="list-group-item">
+                <form action="{{ route('productes.toggle', [$llista->id_llista_compra, $producte->id_producte]) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="btn btn-link nom-producte {{ $producte->comprat ? 'ratllat' : '' }}">
+                        {{ $producte->nom_producte }}
+                    </button>
+                </form>
+            </div>
+        @endforeach
     @empty
-    <p class="text-muted">No hi ha productes en aquesta llista.</p>
+        <p class="text-muted">No hi ha productes en aquesta llista.</p>
+    @endforelse
+
+    <!-- Productes agrupats per etiquetes -->
+    <h4 class="mt-5 mb-3">🏷️ Productes en aquesta llista per etiquetes</h4>
+
+    @php
+        $productesPerEtiqueta = $llista->productes->flatMap(function($producte) {
+            return $producte->etiquetes->map(function($etiqueta) use ($producte) {
+                return ['etiqueta' => $etiqueta->nom_etiqueta, 'producte' => $producte];
+            });
+        })->groupBy('etiqueta');
+    @endphp
+
+    @forelse($productesPerEtiqueta as $nomEtiqueta => $items)
+        <div class="categoria-nom">🏷️ {{ $nomEtiqueta }}</div>
+        @foreach($items as $item)
+            <div class="list-group-item">
+                <form action="{{ route('productes.toggle', [$llista->id_llista_compra, $item['producte']->id_producte]) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="btn btn-link nom-producte {{ $item['producte']->comprat ? 'ratllat' : '' }}">
+                        {{ $item['producte']->nom_producte }}
+                    </button>
+                </form>
+            </div>
+        @endforeach
+    @empty
+        <p class="text-muted">No hi ha productes amb etiquetes.</p>
     @endforelse
 
     <!-- Botó tornar -->

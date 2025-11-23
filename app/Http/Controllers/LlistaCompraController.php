@@ -7,6 +7,7 @@ use App\Models\User;
 
 use App\Models\Categoria;
 use App\Models\LlistaCompra;
+use App\Models\Producte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,8 +34,8 @@ class LlistaCompraController extends Controller
         ]);
 
         $llista = LlistaCompra::create([
-            'nom' => $request->nom,
-            'user_id' => auth()->id(),
+              'nom' => $request->nom,
+            'user_id' => Auth::id(),
         ]);
 
         // Crear categories per defecte
@@ -84,16 +85,20 @@ class LlistaCompraController extends Controller
     }
 
     public function toggleProducte($id_llista, $id_producte)
-    {
-        $estats = session()->get("llista_{$id_llista}_estats", []);
+{
+    // Busquem el producte
+    $producte = Producte::where('id_producte', $id_producte)
+        ->where('id_llista_compra', $id_llista)
+        ->firstOrFail();
 
-        // Alternem l’estat
-        $estats[$id_producte] = !($estats[$id_producte] ?? false);
+    // Alternem l’estat i el guardem a la BD
+    $producte->comprat = !$producte->comprat;
+    $producte->save();
 
-        session()->put("llista_{$id_llista}_estats", $estats);
+    // Redirigim a la vista
+    return redirect()->route('llistes.editar', $id_llista);
+}
 
-        return redirect()->route('llistes.editar', $id_llista);
-    }
 
 
 

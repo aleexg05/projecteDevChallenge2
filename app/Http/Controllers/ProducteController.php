@@ -12,9 +12,9 @@ class ProducteController extends Controller
 {
   public function index($id)
 {
-    $llista = \App\Models\LlistaCompra::with('productes.categoria')
+       $llista = \App\Models\LlistaCompra::with('productes.categoria')
         ->where('id_llista_compra', $id)
-        ->where('user_id', auth()->id())
+        ->where('user_id', Auth::id())
         ->firstOrFail();
 
     $productes = $llista->productes;
