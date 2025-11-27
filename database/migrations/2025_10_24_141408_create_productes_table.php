@@ -10,10 +10,13 @@ return new class extends Migration {
         Schema::create('productes', function (Blueprint $table) {
             $table->unsignedBigInteger('id_producte');
             $table->primary('id_producte');
-            $table->string('nom_producte', 20);
+
+            $table->string('nom_producte', 50);
             $table->unsignedBigInteger('id_categoria');
             $table->unsignedBigInteger('id_llista_compra');
-            $table->string('etiqueta_producte', 50); 
+            $table->string('etiqueta_producte', 50)->nullable(); // o id_etiqueta si uses FK
+            $table->boolean('comprat')->default(false); // 👈 camp comprat
+
             $table->timestamps();
 
             $table->foreign('id_categoria')

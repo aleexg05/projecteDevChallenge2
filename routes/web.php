@@ -73,7 +73,8 @@ Route::get('/categories/{id_categoria}/editar', [CategoriaController::class, 'ed
 Route::put('/categories/{id_categoria}', [CategoriaController::class, 'actualitzar'])->name('categories.actualitzar');
 
 // Toggle producte
-Route::put('/llistes/{id_llista}/productes/{id_producte}/toggle', [LlistaCompraController::class, 'toggleProducte'])->name('productes.toggle');
+// Toggle producte
+Route::put('/llistes/{id_llista}/productes/{id_producte}/toggle', [ProducteController::class, 'toggle'])->name('productes.toggle');
 
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
